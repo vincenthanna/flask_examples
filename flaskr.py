@@ -60,7 +60,8 @@ def predict():
 def init_db():
     with closing(connect_db()) as db:
         with app.open_resource('schema.sql') as f:
-            db.cursor().executescript(f.read())
+            sqlstr = f.read().decode('utf-8')
+            db.cursor().executescript(sqlstr)
         db.commit()
 
 
