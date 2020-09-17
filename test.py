@@ -41,8 +41,13 @@ class flaskrTestCase(unittest.TestCase):
         rv = self.login('admin', 'defaultx')
         assert 'Invalid Password' in rv.data.decode('utf-8')
 
-
-
+    def test_message(self):
+        print(">>>>>>>>> test_message")
+        self.login('admin', 'default')
+        rv = self.app.post('/add', data=dict(title='<Hello>', text='<strong>HTML</strong> allowed here'), follow_redirects=True)
+        assert 'No entries here so far' not in rv.data.decode('utf-8')
+        assert '&lt;Hello&gt;' in rv.data.decode('utf-8')
+        assert '<strong>HTML</strong> allowed here' in rv.data.decode('utf-8')
 
 
 if __name__ == '__main__':

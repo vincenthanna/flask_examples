@@ -19,6 +19,18 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 app.debug=True
 
+'''
+session 사용을 위해서는 secret key를 설정해야 한다.
+그렇지 않으면 아래와 같은 에러 발생함
+    RuntimeError: The session is unavailable because no secret key was set
+
+암호는 필요시마다 생성하면 될 듯 하다.
+'''
+import secrets
+secret_key = secrets.token_urlsafe(32)
+app.secret_key = secret_key
+
+
 import ssl
 
 ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS)
